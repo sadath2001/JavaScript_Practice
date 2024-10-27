@@ -1,35 +1,14 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const fs = require("fs");
+const User = require("./models/user");
+const { mongoConnect } = require("./connection");
 const app = express();
 const port = 8000;
 // data generate from https://www.mockaroo.com/
 // Hybrid server
 const dbURL = "mongodb://127.0.0.1:27017/test_data";
-mongoose
-  .connect(dbURL)
-  .then(() => console.log("Mongodo server started"))
-  .catch((err) => console.log("cannot connect: ", err));
-const userSchema = new mongoose.Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    designation: {
-      type: String,
-    },
-  },
-  { timestamps: true }
-);
-const User = mongoose.model("user", userSchema);
+mongoConnect(dbURL);
+
 // middleware - to get data from frontend and display it as json
 app.use(express.urlencoded({ extended: false }));
 
