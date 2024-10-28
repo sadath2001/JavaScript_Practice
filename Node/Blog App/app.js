@@ -11,7 +11,7 @@ require("dotenv").config();
 
 const app = express();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 const dbURL = process.env.DB_URL;
 
 // DB Connection
